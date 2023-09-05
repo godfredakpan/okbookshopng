@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
-import Uploadcare from 'uploadcare-widget';
 
 const AddBook = () => {
   const [title, setTitle] = useState("");
