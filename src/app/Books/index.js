@@ -191,7 +191,6 @@ const BookList = ({ books }) => {
             {currentBooks.map((book) => (
               <div
                 key={book.id}
-                // onClick={() => addToCart(book)}
                 className="bg-white shadow-md rounded-lg overflow-hidden sm:col-span-1 md:col-span-1 lg:col-span-1"
               >
                 <div className="relative h-32">
@@ -218,7 +217,8 @@ const BookList = ({ books }) => {
                 </div>
               </div>
             ))}
-          </div><div className="mt-4">
+          </div>
+          <div className="mt-4">
             <ul className="flex justify-center">
               {Array.from({ length: Math.ceil(sortedBooks.length / booksPerPage) }, (_, index) => (
                 <li key={index} className="mx-2">
@@ -231,25 +231,45 @@ const BookList = ({ books }) => {
                 </li>
               ))}
             </ul>
-          </div><div className="mt-4">
+          </div>
+          <div className="mt-4">
             <p className="text-xl font-semibold">
               Cart{" "}
               <span className="text-sm ml-2">({cart.length} items)</span>
             </p>
-            <ul>
+            <table style={{ borderCollapse: "collapse", border: "0" }}>
+            <thead>
+              <tr>
+                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Title</th>
+                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Price</th>
+                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
               {cart.map((item) => (
-                <li style={{ marginTop: 10 }} key={item?.id}>
-                  {item?.title} - ${item?.price}{" "}
-                  <button className="bg-red-500 text-white px-3 py-2 rounded" onClick={() => removeFromCart(item)}>Remove</button>
-                </li>
+                <tr key={item?.id}>
+                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{item?.title}</td>
+                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>${item?.price}</td>
+                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>
+                    <button
+                      className="bg-red-500 text-white px-3 py-2 rounded"
+                      onClick={() => removeFromCart(item)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </ul>
+            </tbody>
+          </table>
+
             <h2 className="mt-2">
               Total: ${calculateTotal()} {/* Display the calculated total */}
             </h2>
             {cart.length > 0 && (
               <button
                 onClick={openCheckout}
+                style={{marginBottom: 100}}
                 className="bg-blue-500 text-white px-3 py-2 mt-2 rounded"
               >
                 Checkout
