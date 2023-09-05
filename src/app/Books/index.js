@@ -147,7 +147,7 @@ const BookList = ({ books }) => {
 
             <button
               onClick={() => sortBooksByCategory("All")}
-              className={`${sortCategory === "All" ? "bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-white" : "bg-dark-200"} px-2 py-1 rounded mr-3`}
+              className={`${sortCategory === "All" ? "bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-white" : "bg-dark-200"} px-2 py-2 rounded mr-3`}
             >
               All
             </button>
@@ -158,7 +158,7 @@ const BookList = ({ books }) => {
                 style={{ marginTop: 20 }}
                 key={category}
                 onClick={() => sortBooksByCategory(category)}
-                className={`${sortCategory === category ? "bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-white" : "bg-dark-200"} px-2 py-1 rounded mr-5`}
+                className={`${sortCategory === category ? "bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-white" : "bg-dark-200"} px-2 py-2 rounded mr-5`}
               >
                 {category}
               </button>
@@ -188,7 +188,8 @@ const BookList = ({ books }) => {
                 </button>
               </>
             )}
-          </div><div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {currentBooks.map((book) => (
               <div
                 key={book.id}
