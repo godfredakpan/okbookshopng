@@ -10,7 +10,7 @@ const BookList = ({ books }) => {
   const [sortCategory, setSortCategory] = React.useState("All"); // Default: show all categories
   const [searchQuery, setSearchQuery] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [booksPerPage] = React.useState(8);
+  const [booksPerPage] = React.useState(4);
   const [showCheckout, setShowCheckout] = React.useState(false);
 
   // Initialize cart data from sessionStorage on component mount
@@ -137,7 +137,6 @@ const BookList = ({ books }) => {
     });
   };
 
-
   return (
     <div>
       {showCheckout ? (
@@ -148,7 +147,6 @@ const BookList = ({ books }) => {
 
             <button
               onClick={() => sortBooksByCategory("All")}
-
               className={`${sortCategory === "All" ? "bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full text-white" : "bg-dark-200"} px-2 py-1 rounded mr-3`}
             >
               All
@@ -175,17 +173,20 @@ const BookList = ({ books }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full p-2 border border-black-300 rounded" />
             {searchQuery.trim() !== "" && (
-              <><button
+              <>
+              <button
                 onClick={searchBooks}
                 className="bg-blue-700 text-white px-2 py-1 rounded mt-2"
               >
                 Search
-              </button><button
+              </button>
+              <button
                 onClick={resetSearch}
                 className="bg-gray-300 text-gray-700 px-2 py-1 rounded ml-2"
               >
                   Reset
-                </button></>
+                </button>
+              </>
             )}
           </div><div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {currentBooks.map((book) => (
