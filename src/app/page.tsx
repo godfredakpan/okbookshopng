@@ -10,7 +10,7 @@ import { getAllBooks } from '@/services';
 
 export default function Home() {
   const [allBooks, setBooks] = React.useState([]);
-  const [loading, setLoading] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
 		async function fetchData() {
