@@ -1,22 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { UploadCloudinary, createBook } from "../../services";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddBook = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState();
   const [summary, setSummary] = useState("");
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
-
+  const [imageUploadLoading, setImageUploadLoading] = useState(false);
   const [image, setImage] = useState(null);
 
   // Function to handle image selection
-  const handleImageUpload = (event) => {
+  const handleImageUpload = async(event) => {
     const file = event.target.files[0];
     if (file) {
-      setImage(file);
+      setImageUploadLoading(true)
+      const upload = await UploadCloudinary(file);
+      // const convertedFile = await Convert(file) // switch this to use base64
+      // setResume(upload.secure_url);
+      setImage(upload.secure_url);
+      setImageUploadLoading(false)
     }
   };
 
@@ -25,7 +33,7 @@ const AddBook = () => {
     setImage(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newBook = {
@@ -38,14 +46,17 @@ const AddBook = () => {
       id: Date.now(),
     };
 
-    // TODO: Send the new book data to your backend or storage
+    const response = await createBook(newBook);
 
-    console.log('new Book', newBook)
+    if (response.status === 200) {
+      toast.success("Book created successfully");
+    }
 
     setTitle("");
     setAuthor("");
     setPrice("");
     setSummary("");
+    setImage("");
     setCategories([]);
     setCategoryId("");
   };
@@ -65,6 +76,8 @@ const AddBook = () => {
   };
 
   return (
+    <>
+    <ToastContainer />
     <div className="min-h-screen flex items-center justify-center bg-dark-600 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-12">
         <div>
@@ -86,8 +99,7 @@ const AddBook = () => {
                 onChange={(e) => setTitle(e.target.value)}
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Title"
-              />
+                placeholder="Title" />
             </div>
             <div>
               <label htmlFor="author" className="sr-only">
@@ -101,8 +113,7 @@ const AddBook = () => {
                 onChange={(e) => setAuthor(e.target.value)}
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Author"
-              />
+                placeholder="Author" />
             </div>
             <div>
               <label htmlFor="price" className="sr-only">
@@ -116,8 +127,7 @@ const AddBook = () => {
                 onChange={(e) => setPrice(e.target.value)}
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Price"
-              />
+                placeholder="Price" />
             </div>
             <div>
               <label htmlFor="summary" className="sr-only">
@@ -131,8 +141,7 @@ const AddBook = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                 placeholder="Summary"
-                rows="4"
-              />
+                rows="4" />
             </div>
             <div>
               <label htmlFor="category" className="sr-only">
@@ -178,10 +187,9 @@ const AddBook = () => {
               {image ? (
                 <div className="mt-2 flex items-center space-x-2">
                   <img
-                    src={URL.createObjectURL(image)}
+                    src={image}
                     alt="Selected Image"
-                    className="w-24 h-24 rounded-lg object-cover"
-                  />
+                    className="w-24 h-24 rounded-lg object-cover" />
                   <button
                     type="button"
                     onClick={removeImage}
@@ -197,8 +205,7 @@ const AddBook = () => {
                   type="file"
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="mt-2 border-gray-300 border rounded-md"
-                />
+                  className="mt-2 border-gray-300 border rounded-md" />
               )}
             </div>
             <button
@@ -207,18 +214,24 @@ const AddBook = () => {
               style={{ marginTop: 20 }}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Add Book
+              {imageUploadLoading ? (
+                'Image Loading...'
+              ) : (
+                'Add Book'
+              )}
             </button>
             <a
-            style={{marginTop: 20}}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-            href="/adminBooks"
-            rel="noopener noreferrer"
-          >Go back</a>
+              style={{ marginTop: 20 }}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              href="/adminBooks"
+              rel="noopener noreferrer"
+            >
+              Go back
+            </a>
           </div>
         </form>
       </div>
-    </div>
+    </div></>
   );
 };
 

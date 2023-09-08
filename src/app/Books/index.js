@@ -12,6 +12,7 @@ const BookList = ({ books }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [booksPerPage] = React.useState(4);
   const [showCheckout, setShowCheckout] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   // Initialize cart data from sessionStorage on component mount
   React.useEffect(() => {
@@ -20,6 +21,17 @@ const BookList = ({ books }) => {
       setCart(JSON.parse(cartData));
     }
   }, []);
+
+  React.useEffect(() => {
+		async function fetchData() {
+      setLoading(true)
+			setSortedBooks(books);
+      setLoading(false)
+		}
+		fetchData();
+
+	}, [books]);
+
 
   const [cart, setCart] = React.useState([]);
 
@@ -70,6 +82,7 @@ const BookList = ({ books }) => {
     const isBookInCart = cart.some((item) => item.id === book.id);
 
     if (!isBookInCart) {
+      book.amount = Number(book.amount);
       // If the book is not in the cart, add it
       const updatedCart = [...cart, book];
       toast.success(book.title + " Added to cart!", {
@@ -105,10 +118,20 @@ const BookList = ({ books }) => {
   const calculateTotal = () => {
     let total = 0;
     cart.forEach((item) => {
-      total += item.price;
+      total += Number(item.price);
     });
-    return total.toFixed(2); // Ensure the total has two decimal places
+    return moneyFormat(total.toFixed(2)); // Ensure the total has two decimal places
   };
+
+  const moneyFormat = (amount) => {
+    const formattedAmount = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'NGN', 
+    }).format(amount);
+    
+
+    return formattedAmount;
+  }
 
   const openCheckout = () => {
     setShowCheckout(true);
@@ -136,6 +159,8 @@ const BookList = ({ books }) => {
       draggable: true,
     });
   };
+  
+ 
 
   return (
     <div>
@@ -195,17 +220,17 @@ const BookList = ({ books }) => {
                 key={book.id}
                 className="bg-white shadow-md rounded-lg overflow-hidden sm:col-span-1 md:col-span-1 lg:col-span-1"
               >
-                <div className="relative h-32">
+                <div className="relative h-52" style={{height: 400}}>
                   <Image
                     src={book.image}
                     alt={book.title}
                     layout="fill"
-                    objectFit="cover" />
+                    style={{  resizeMode: 'cover' }}/>
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl text-black font-semibold mb-2">{book.title}</h3>
                   <p className="text-gray-700 text-sm mb-2">Author: {book.author}</p>
-                  <p className="text-gray-700 text-sm mb-2">Price: ${book.price}</p>
+                  <p className="text-gray-700 text-sm mb-2">Price: {moneyFormat(book.price)}</p>
                   <p className="text-gray-700 text-sm mb-2">
                     Categories: {book.categories.join(", ")}
                   </p>
@@ -251,7 +276,7 @@ const BookList = ({ books }) => {
               {cart.map((item) => (
                 <tr key={item?.id}>
                   <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{item?.title}</td>
-                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>${item?.price}</td>
+                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{moneyFormat(item?.price)}</td>
                   <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>
                     <button
                       className="bg-red-500 text-white px-3 py-2 rounded"
@@ -266,7 +291,7 @@ const BookList = ({ books }) => {
           </table>
 
             <h2 className="mt-2">
-              Total: ${calculateTotal()} {/* Display the calculated total */}
+              Total: {calculateTotal()} {/* Display the calculated total */}
             </h2>
             {cart.length > 0 && (
               <button

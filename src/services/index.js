@@ -1,7 +1,13 @@
 import request from 'umi-request';
 
 const API_URL = 'https://hrmaneja.eu-4.evennode.com/api/v1'
+// const API_URL = 'http://localhost:5050/api/v1'
+
 const USER_TOKEN = process.env.USER_TOKEN
+
+const CLOUDINARY_CLOUD_NAME = 'archer';
+
+const CLOUDINARY_UPLOAD_PRESET = 'okbookshopng';
 
 export async function loginUser(credentials) {
     return request(`${API_URL}/user/auth/login`, {
@@ -16,7 +22,7 @@ export async function loginUser(credentials) {
   }
 
   export async function getAllBooks() {
-    return request(`${API_URL}/api/bookshop/books`, {
+    return request(`${API_URL}/bookshop/books`, {
       method: 'get',
       headers: {
          'Content-Type': 'application/json',
@@ -33,6 +39,7 @@ export async function createBook(body) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
+        'Authorization': USER_TOKEN,
       },
       body: JSON.stringify(body),
     });
@@ -62,3 +69,24 @@ export async function updateBook(body, bookId) {
       },
     });
   }
+
+export const UploadCloudinary = async (file) => {
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    data.append("cloud_name", CLOUDINARY_CLOUD_NAME);
+    const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`,
+        {
+            method: "post",
+            mode: "cors",
+            body: data
+        }
+    );
+
+    let json = await res.json();
+
+    return json;
+
+};
+
