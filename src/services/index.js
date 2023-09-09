@@ -70,6 +70,30 @@ export async function updateBook(body, bookId) {
     });
   }
 
+
+  export async function getAllOrders() {
+    return request(`${API_URL}/bookshop/orders`, {
+      method: 'get',
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': USER_TOKEN,
+      },
+    });
+  }
+
+  export async function createOrders(body) {
+    return request(`${API_URL}/bookshop/orders/create`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Authorization': USER_TOKEN,
+      },
+      body: JSON.stringify(body),
+    });
+  }
+
 export const UploadCloudinary = async (file) => {
     const data = new FormData();
     data.append("file", file);

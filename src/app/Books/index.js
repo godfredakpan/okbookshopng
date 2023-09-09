@@ -4,6 +4,7 @@ import React from "react";
 import Image from 'next/image';
 import CheckoutForm from "./CheckoutForm";
 import { toast } from "react-toastify";
+import { createOrders } from "@/services";
 
 const BookList = ({ books }) => {
   const [sortedBooks, setSortedBooks] = React.useState(books);
@@ -23,14 +24,14 @@ const BookList = ({ books }) => {
   }, []);
 
   React.useEffect(() => {
-		async function fetchData() {
+    async function fetchData() {
       setLoading(true)
-			setSortedBooks(books);
+      setSortedBooks(books);
       setLoading(false)
-		}
-		fetchData();
+    }
+    fetchData();
 
-	}, [books]);
+  }, [books]);
 
 
   const [cart, setCart] = React.useState([]);
@@ -126,9 +127,9 @@ const BookList = ({ books }) => {
   const moneyFormat = (amount) => {
     const formattedAmount = new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'NGN', 
+      currency: 'NGN',
     }).format(amount);
-    
+
 
     return formattedAmount;
   }
@@ -143,24 +144,43 @@ const BookList = ({ books }) => {
   };
 
   // Function to handle the checkout form submission
-  const handleCheckout = (formData) => {
+  const handleCheckout = async (formData) => {
     // TODO: Handle the form data submission, e.g., send it to a server
-    console.log(formData);
-    // Close the checkout form
-    setCart([]);
-    closeCheckout();
+    const body = {
+      buyerPhone: formData.phone,
+      buyerEmail: formData.email,
+      buyerName: formData.name,
+      buyerAddress: formData.address,
+      books: cart,
+      amount: cart.reduce((total, book) => total + book.price, 0)
+    }
 
-    toast.success("Order sent successfully!", {
-      position: "top-right",
-      autoClose: 3000, // Auto close the toast after 3 seconds
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    const response = await createOrders(body);
+
+    if (response.status === 200) {
+      setCart([]);
+      closeCheckout();
+      toast.success("Order sent successfully!", {
+        position: "top-right",
+        autoClose: 3000, // Auto close the toast after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }else{
+      toast.error("Order failed, try again!", {
+        position: "top-right",
+        autoClose: 3000, // Auto close the toast after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
   };
-  
- 
+
+
 
   return (
     <div>
@@ -199,16 +219,16 @@ const BookList = ({ books }) => {
               className="w-full p-2 border border-black-300 rounded" />
             {searchQuery.trim() !== "" && (
               <>
-              <button
-                onClick={searchBooks}
-                className="bg-blue-700 text-white px-2 py-1 rounded mt-2"
-              >
-                Search
-              </button>
-              <button
-                onClick={resetSearch}
-                className="bg-gray-300 text-gray-700 px-2 py-1 rounded ml-2"
-              >
+                <button
+                  onClick={searchBooks}
+                  className="bg-blue-700 text-white px-2 py-1 rounded mt-2"
+                >
+                  Search
+                </button>
+                <button
+                  onClick={resetSearch}
+                  className="bg-gray-300 text-gray-700 px-2 py-1 rounded ml-2"
+                >
                   Reset
                 </button>
               </>
@@ -220,12 +240,12 @@ const BookList = ({ books }) => {
                 key={book.id}
                 className="bg-white shadow-md rounded-lg overflow-hidden sm:col-span-1 md:col-span-1 lg:col-span-1"
               >
-                <div className="relative h-52" style={{height: 400}}>
+                <div className="relative h-52" style={{ height: 400 }}>
                   <Image
                     src={book.image}
                     alt={book.title}
                     layout="fill"
-                    style={{  resizeMode: 'cover' }}/>
+                    style={{ resizeMode: 'cover' }} />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl text-black font-semibold mb-2">{book.title}</h3>
@@ -265,30 +285,30 @@ const BookList = ({ books }) => {
               <span className="text-sm ml-2">({cart.length} items)</span>
             </p>
             <table style={{ borderCollapse: "collapse", border: "0" }}>
-            <thead>
-              <tr>
-                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Title</th>
-                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Price</th>
-                <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((item) => (
-                <tr key={item?.id}>
-                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{item?.title}</td>
-                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{moneyFormat(item?.price)}</td>
-                  <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>
-                    <button
-                      className="bg-red-500 text-white px-3 py-2 rounded"
-                      onClick={() => removeFromCart(item)}
-                    >
-                      Remove
-                    </button>
-                  </td>
+              <thead>
+                <tr>
+                  <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Title</th>
+                  <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Price</th>
+                  <th style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {cart.map((item) => (
+                  <tr key={item?.id}>
+                    <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{item?.title}</td>
+                    <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>{moneyFormat(item?.price)}</td>
+                    <td style={{ padding: "8px", borderBottom: "0.5px solid #ddd" }}>
+                      <button
+                        className="bg-red-500 text-white px-3 py-2 rounded"
+                        onClick={() => removeFromCart(item)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
             <h2 className="mt-2">
               Total: {calculateTotal()} {/* Display the calculated total */}
@@ -296,7 +316,7 @@ const BookList = ({ books }) => {
             {cart.length > 0 && (
               <button
                 onClick={openCheckout}
-                style={{marginBottom: 100}}
+                style={{ marginBottom: 100 }}
                 className="bg-blue-500 text-white px-3 py-2 mt-2 rounded"
               >
                 Checkout

@@ -4,18 +4,18 @@ const CheckoutForm = ({ onClose, onCheckout }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can perform any necessary validation and submit data here
-    const formData = { name, email, phone };
+    const formData = { name, email, phone, address};
     onCheckout(formData);
   };
 
   return (
     <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-900 bg-opacity-70 z-50">
       <div style={{width: 500}}  className="bg-white p-10 rounded shadow-md">
-        <h2 className="text-xl text-gray-900 font-semibold mb-4">Place Order</h2>
+        <h2 className="text-xl text-gray-900 font-semibold mb-4">Place Order <small className="text-green-900"> (we will contact you)</small></h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-600">Name:</label>
@@ -47,6 +47,16 @@ const CheckoutForm = ({ onClose, onCheckout }) => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full text-gray-400 border-gray-300 rounded-md p-2"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-600">Address:</label>
+            <textarea
+              style={{borderBlockColor: 'gray', borderWidth: 1}}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="w-full text-gray-400 border-gray-300 rounded-md p-5"
               required
             />
           </div>
