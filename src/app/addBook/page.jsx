@@ -88,17 +88,16 @@ const AddBook = () => {
           <a key={url} href={url} className="bg-gray-500 rounded-lg px-3 py-2 text-white-700 font-medium hover:bg-slate-100 hover:text-slate-900">{title}</a>
         ))}
       </nav>
-      <div className="min-h-screen flex items-center justify-center bg-dark-600 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-12">
+      <div className="min-h-screen flex items-center justify-center bg-dark-600 py-2 px-6 sm:px-6 lg:px-1">
+        <div className="max-w-screen-md w-full space-y-12">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-white-900">
               Add Book
             </h2>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="title" className="sr-only text-white-200">
+          <form className="mt-8 space-y-10" onSubmit={handleSubmit}>
+            <div className="mb-6">
+                <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Title
                 </label>
                 <input
@@ -108,12 +107,12 @@ const AddBook = () => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                  placeholder="Title"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Harry Potter "
                 />
               </div>
-              <div>
-                <label htmlFor="author" className="sr-only">
+              <div className="mb-6">
+                <label htmlFor="author" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Author
                 </label>
                 <input
@@ -123,12 +122,12 @@ const AddBook = () => {
                   value={author}
                   onChange={(e) => setAuthor(e.target.value)}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Author"
                 />
               </div>
-              <div>
-                <label htmlFor="price" className="sr-only">
+              <div className="mb-6">
+                <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Price
                 </label>
                 <input
@@ -138,12 +137,12 @@ const AddBook = () => {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Price"
                 />
               </div>
-              <div>
-                <label htmlFor="summary" className="sr-only">
+              <div className="mb-6">
+                <label htmlFor="summary" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Summary
                 </label>
                 <textarea
@@ -152,13 +151,13 @@ const AddBook = () => {
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Summary"
                   rows="4"
                 />
               </div>
-              <div>
-                <label htmlFor="category" className="sr-only">
+              <div className="mb-6">
+                <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Categories
                 </label>
                 <select
@@ -166,7 +165,7 @@ const AddBook = () => {
                   name="category"
                   value={categoryId}
                   onChange={handleCategoryChange}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="" disabled>
                     Select a category
@@ -177,7 +176,7 @@ const AddBook = () => {
                   {/* Add more categories as needed */}
                 </select>
               </div>
-              <div className="text-white-700">
+              <div className="m-6">
                 Selected Categories:
                 {categories.map((category, index) => (
                   <span
@@ -189,9 +188,9 @@ const AddBook = () => {
                   </span>
                 ))}
               </div>
-            </div>
+            {/* </div> */}
             <div>
-              <div>
+              <div className="mb-6">
                 <label
                   htmlFor="image"
                   className="block text-sm font-medium text-white-700"
@@ -220,7 +219,7 @@ const AddBook = () => {
                     type="file"
                     accept="image/*"
                     onChange={handleImageUpload}
-                    className="mt-2 border-gray-300 border rounded-md"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 )}
               </div>

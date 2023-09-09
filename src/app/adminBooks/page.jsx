@@ -45,23 +45,23 @@ const Books = () => {
       <main className="min-h-screen flex-col items-center justify-between p-20">
         <h1 className="text-3xl font-bold mb-4">Books List</h1>
 
-        <div className="z-10 w-full max-w-10xl items-center justify-between font-mono text-sm lg:flex">
-          <table className="table-auto min-w-full divide-y divide-gray-200">
-            <thead>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs uppercase text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Price</th>
-                <th>Action</th>
+                <th scope="col" class="px-6 py-3">Title</th>
+                <th scope="col" class="px-6 py-3">Author</th>
+                <th scope="col" class="px-6 py-3">Price</th>
+                <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
             <tbody>
               {allBooks.map((book) => (
-                <tr key={book.id}>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                  <td>NGN{book.price.toFixed(2)}</td>
-                  <td>
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={book.id}>
+                  <td className="px-6 py-4">{book.title}</td>
+                  <td className="px-6 py-4">{book.author}</td>
+                  <td className="px-6 py-4">NGN{book.price.toFixed(2)}</td>
+                  <td className="px-6 py-4">
                     <button
                       className="bg-blue-500 text-white px-2 py-1 rounded mr-1"
                       onClick={() => editBook(book.id)}

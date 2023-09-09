@@ -31,41 +31,44 @@ const Orders = () => {
     </nav>
       <main className="min-h-screen flex-col items-center justify-between p-20">
         <h1 className="text-3xl font-bold mb-4">Orders</h1>
-        <div className="z-10 w-full max-w-10xl items-center justify-between font-mono text-sm lg:flex">
-          <table className="table-auto min-w-full divide-y divide-x divide-gray-200">
-            <thead>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs uppercase text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
-                <th></th>
-                <th>Buyer</th>
-                <th>Orders</th>
-                <th>Total Amount</th>
-                <th>Action</th>
+                <th scope="col" class="px-6 py-3"></th>
+                <th scope="col" class="px-6 py-3">Buyer</th>
+                <th scope="col" class="px-6 py-3">Orders</th>
+                <th scope="col" class="px-6 py-3">Total Amount</th>
+                <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
             <tbody>
               {allOrders.map((order) => (
-                <tr key={order.id}>
+                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={order.id}>
                   <td></td>
-                  <td>
+                  <td className="px-6 py-4">
+                    <div>
                     <p>Name: {order.buyerName}</p>
                     <p>Email: {order.buyerEmail}</p>
                     <p>Address: {order.buyerAddress}</p>
                     <p>Phone: {order.buyerPhone}</p>
+                    </div>
                   </td>
-                  <td>
-                    {Array.from(
-                      new Set(allOrders.map((order) => order.books).flat())
-                    ).map((book) => (
-                      <>
-                        <p key={book.id}>Name: {book.title}</p>
-                        <p key={book.id}>Author: {book.author}</p>
-                        <p key={book.id}>Price: {book.price}</p>
-                        <br></br>
-                      </>
-                    ))}
+                  
+                  <td  className="px-6 py-4">
+                  <div>
+                {order.books.map((book) => (
+                    <div key={book.id}>
+                    <p>Name: {book.title}</p>
+                    <p>Author: {book.author}</p>
+                    <p>Price: {book.price}</p>
+                    <br />
+                    </div>
+                ))}
+                </div>
                   </td>
-                  <td>NGN{order.amount.toFixed(2)}</td>
-                  <td>
+                  <td  className="px-6 py-4">NGN{order.amount.toFixed(2)}</td>
+                  <td  className="px-6 py-4">
                     <button
                       className="bg-blue-500 text-white px-2 py-1 rounded mr-1"
                       onClick={() => editBook(book.id)}
