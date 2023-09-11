@@ -2,12 +2,17 @@
 import React, { useState } from "react";
 import { books } from "../../data/books.json";
 import Footer from "@/components/footer";
-import { getAllBooks } from "@/services";
+import { getAllBooks, getUser } from "@/services";
 
 const Books = () => {
   const [allBooks, setBooks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
+  React.useEffect(() => {
+    if (!getUser()) {
+        window.location.href = "/login";
+    }
+}, []);
   React.useEffect(() => {
     async function fetchData() {
       setLoading(true);

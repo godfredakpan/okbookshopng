@@ -3,11 +3,17 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import {loginUser} from '../../services/index'
+import {getUser, loginUser} from '../../services/index'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  React.useEffect(() => {
+		if (getUser()) {
+			window.location.href = "/adminBooks";
+		}
+	}, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,6 +34,7 @@ const Login = () => {
           pauseOnHover: true,
           draggable: true,
         });
+        setUserSession(response.data.token,response.data)
         window.location='/adminBooks'
       } else {
         // Failed login

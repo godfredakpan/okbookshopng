@@ -2,7 +2,7 @@
 "use client";
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { UploadCloudinary, createBook } from "../../services";
+import { UploadCloudinary, createBook, getUser } from "@/services";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddBook = () => {
@@ -14,6 +14,12 @@ const AddBook = () => {
   const [categoryId, setCategoryId] = useState("");
   const [imageUploadLoading, setImageUploadLoading] = useState(false);
   const [image, setImage] = useState(null);
+
+  React.useEffect(() => {
+		if (!getUser()) {
+			window.location.href = "/login";
+		}
+	}, []);
 
   // Function to handle image selection
   const handleImageUpload = async (event) => {

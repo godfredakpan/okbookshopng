@@ -1,11 +1,17 @@
 "use client";
 import React from "react";
 import Footer from "@/components/footer";
-import { getAllOrders } from "@/services";
+import { getAllOrders, getUser } from "@/services";
 
 const Orders = () => {
   const [allOrders, setOrders] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!getUser()) {
+        window.location.href = "/login";
+    }
+}, []);
 
   React.useEffect(() => {
     async function fetchData() {
