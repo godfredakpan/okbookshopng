@@ -11,7 +11,7 @@ const BookList = ({ books }) => {
   const [sortCategory, setSortCategory] = React.useState("All"); // Default: show all categories
   const [searchQuery, setSearchQuery] = React.useState("");
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [booksPerPage] = React.useState(4);
+  const [booksPerPage] = React.useState(12);
   const [showCheckout, setShowCheckout] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
