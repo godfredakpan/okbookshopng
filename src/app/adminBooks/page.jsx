@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { books } from "../../data/books.json";
 import Footer from "@/components/footer";
 import { getAllBooks, getUser } from "@/services";
+import Image from "next/image";
 
 const Books = () => {
   const [allBooks, setBooks] = React.useState([]);
@@ -57,6 +58,7 @@ const Books = () => {
                 <th scope="col" class="px-6 py-3">Title</th>
                 <th scope="col" class="px-6 py-3">Author</th>
                 <th scope="col" class="px-6 py-3">Price</th>
+                <th scope="col" class="px-6 py-3">Picture</th>
                 <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
@@ -66,6 +68,15 @@ const Books = () => {
                   <td className="px-6 py-4">{book.title}</td>
                   <td className="px-6 py-4">{book.author}</td>
                   <td className="px-6 py-4">NGN{book.price.toFixed(2)}</td>
+                  <td className="px-6 py-4"> 
+                  <Image
+                    src={book.image}
+                    alt={book.title}
+                    // layout="fill"
+                    width={100}
+                    height={100}
+                    style={{ resizeMode: 'cover' }} />
+                    </td>
                   <td className="px-6 py-4">
                     <button
                       className="bg-blue-500 text-white px-2 py-1 rounded mr-1"

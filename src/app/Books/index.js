@@ -181,6 +181,8 @@ const BookList = ({ books }) => {
   };
 
 
+  console.log('books', books)
+
 
   return (
     <div>
