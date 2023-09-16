@@ -8,6 +8,7 @@ import { UploadCloudinary, createBook, getBook, getUser, updateBook } from "@/se
 
 
 import "react-toastify/dist/ReactToastify.css";
+import Image from 'next/image';
 
 const EditBook = () => {
 
@@ -241,11 +242,17 @@ const EditBook = () => {
                 </label>
                 {image ? (
                   <div className="mt-2 flex items-center space-x-2">
-                    <img
+                    <Image
+                    src={book.image}
+                    alt={book.title}
+                    width={100}
+                    height={100}
+                    style={{ resizeMode: 'cover' }} />
+                    {/* <img
                       src={image}
                       alt="Selected Image"
                       className="w-24 h-24 rounded-lg object-cover"
-                    />
+                    /> */}
                     <button
                       type="button"
                       onClick={removeImage}
