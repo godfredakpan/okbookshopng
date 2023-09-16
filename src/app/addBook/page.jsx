@@ -185,6 +185,12 @@ const AddBook = () => {
                   <option value="Thriller">Thriller</option>
                   <option value="Cooking">Cooking</option>
                   <option value="Travel">Travel</option>
+                  <option value="Fiction">Fiction</option>
+                  <option value="Historical Fiction">Historical Fiction</option>
+                  <option value="Suspense">Suspense</option>
+                  <option value="Sci-Fi">Sci-Fi</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Non Fiction">Non Fiction</option>
 
                   {/* Add more categories as needed */}
                 </select>
