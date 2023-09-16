@@ -11,10 +11,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const EditBook = () => {
 
-  const urlParams = new URLSearchParams(window.location.search);
-  
-  const id = urlParams.get('id');
-
   const [book, setBook] = useState({});
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -35,18 +31,25 @@ const EditBook = () => {
   React.useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const book = await getBook(id);
-      setBook(book);
-      setAuthor(book.author)
-      setTitle(book.title)
-      setCategories(book.categories)
-      setImage(book.image)
-      setPrice(book.price)
-      setSummary(book.summary)
+      if (typeof window !== 'undefined') {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        
+        const book = await getBook(id);
+        setBook(book);
+        setAuthor(book.author)
+        setTitle(book.title)
+        setCategories(book.categories)
+        setImage(book.image)
+        setPrice(book.price)
+        setSummary(book.summary)
+      }
+      
       setLoading(false);
     }
     fetchData();
-  }, [id]);
+  }, []);
 
   // Function to handle image selection
   const handleImageUpload = async (event) => {
