@@ -13,6 +13,7 @@ import Image from 'next/image';
 const EditBook = () => {
 
   const [book, setBook] = useState({});
+  const [id, setID] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
@@ -38,6 +39,7 @@ const EditBook = () => {
         const id = urlParams.get('id');
         
         const book = await getBook(id);
+        setID(id);
         setBook(book);
         setAuthor(book.author)
         setTitle(book.title)
@@ -253,6 +255,8 @@ const EditBook = () => {
                       alt="Selected Image"
                       className="w-24 h-24 rounded-lg object-cover"
                     /> */}
+
+                    
                     <button
                       type="button"
                       onClick={removeImage}
