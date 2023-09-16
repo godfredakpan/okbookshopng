@@ -13,7 +13,7 @@ const BookList = ({ books }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [booksPerPage] = React.useState(12);
   const [showCheckout, setShowCheckout] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   // Initialize cart data from sessionStorage on component mount
   React.useEffect(() => {
@@ -181,6 +181,10 @@ const BookList = ({ books }) => {
   };
 
 
+  const myLoader = ({ src, width, quality }) => {
+    return `res.cloudinary.com/${src}`
+  }
+
   console.log('books', books)
 
 
@@ -243,11 +247,20 @@ const BookList = ({ books }) => {
                 className="bg-white shadow-md rounded-lg overflow-hidden sm:col-span-1 md:col-span-1 lg:col-span-1"
               >
                 <div className="relative h-52" style={{ height: 400 }}>
+                  {book.image ? (
                   <Image
                     src={book.image}
+
                     alt={book.title}
                     layout="fill"
                     style={{ resizeMode: 'cover' }} />
+                  ):(
+                    <Image
+                    src={'https://static.vecteezy.com/system/resources/thumbnails/004/844/749/original/icon-loading-round-gradient-angle-loop-out-animation-with-dark-background-gradient-line-style-for-game-animation-and-others-free-video.jpg'}
+                    alt={book.title}
+                    layout="fill"
+                    style={{ resizeMode: 'cover' }} />
+                  )}
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl text-black font-semibold mb-2">{book.title}</h3>

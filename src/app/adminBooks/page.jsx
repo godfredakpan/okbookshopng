@@ -1,19 +1,25 @@
 "use client";
 import React, { useState } from "react";
-import { books } from "../../data/books.json";
 import Footer from "@/components/footer";
 import { getAllBooks, getUser } from "@/services";
+import { useRouter } from 'next/navigation';
+
+
 import Image from "next/image";
+import Link from "next/link";
 
 const Books = () => {
+  const router = useRouter();
   const [allBooks, setBooks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  
 
   React.useEffect(() => {
     if (!getUser()) {
         window.location.href = "/login";
     }
 }, []);
+
   React.useEffect(() => {
     async function fetchData() {
       setLoading(true);
@@ -24,7 +30,12 @@ const Books = () => {
     fetchData();
   }, []);
 
-  const editBook = (bookId) => {};
+  // const editBook = (book) => {
+  //   router.push({
+	// 		pathname: `/editBook`,
+	// 		state: { book: book }
+	// 	});
+  // };
 
   const deleteBook = (bookId) => {};
 
@@ -78,12 +89,20 @@ const Books = () => {
                     style={{ resizeMode: 'cover' }} />
                     </td>
                   <td className="px-6 py-4">
-                    <button
+                    {/* <button
                       className="bg-blue-500 text-white px-2 py-1 rounded mr-1"
-                      onClick={() => editBook(book.id)}
+                      // onClick={() => editBook(book.id)}
+                      onClick={() => router.push(`/editBook`, { book: book })}
                     >
                       Edit
-                    </button>
+                    </button> */}
+                    <Link
+                    className="bg-blue-500 text-white px-2 py-1 rounded mr-1"
+                      href={{
+                        pathname: 'editBook',
+                        query: { id: book.id },
+                      }}
+                    >Edit</Link>
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded"
                       onClick={() => deleteBook(book.id)}

@@ -32,6 +32,17 @@ export async function loginUser(credentials) {
   }
 
 
+  export async function getBook(bookId) {
+    return request(`${API_URL}/bookshop/detail/${bookId}`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': USER_TOKEN,
+      },
+    });
+  }
+
+
 export async function createBook(body) {
     return request(`${API_URL}/bookshop/books/create`, {
       method: 'post',
