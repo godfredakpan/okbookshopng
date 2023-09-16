@@ -115,7 +115,7 @@ const Books = () => {
           value={searchTerm}
           style={{marginRight: 20}}
           onChange={handleSearchChange}
-          className="border rounded-lg p-2"
+          className="border rounded-lg p-2 text-black"
         />
 
         {/* Sorting dropdown */}
