@@ -118,18 +118,26 @@ const EditBook = () => {
   return (
     <>
       <ToastContainer />
-      <nav className="flex sm:justify-center space-x-4" style={{ marginTop: 20 }}>
-        {[
-          ['Edit Book', '/editBook'],
-          ['Orders', '/orders'],
-          ['Books', '/adminBooks'],
-          // ['Reports', '/reports'],
-        ].map(([title, url]) => (
-          <a key={url} href={url} className="bg-gray-500 rounded-lg px-3 py-2 text-white-700 font-medium hover:bg-slate-100 hover:text-slate-900">{title}</a>
-        ))}
-      </nav>
       <div className="min-h-screen flex items-center justify-center bg-dark-600 py-2 px-6 sm:px-6 lg:px-1">
         <div className="max-w-screen-md w-full space-y-12">
+        <nav
+        className="items-center space-x-4 justify-center"
+        style={{ marginTop: 20, marginBottom: 20 }}
+      >
+      {[
+          ["Create Book", "/addBook"],
+          ["Orders", "/orders"],
+          ["Books", "/adminBooks"],
+        ].map(([title, url]) => (
+          <a
+            key={url}
+            href={url}
+            className="bg-gray-500 rounded-lg px-3 py-2 text-white-700 font-medium hover:bg-slate-100 hover:text-slate-900"
+          >
+            {title}
+          </a>
+        ))}
+        </nav>
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-white-900">
               Edit Book
