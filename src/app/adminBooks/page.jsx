@@ -1,10 +1,11 @@
 'use client'
 import React, { useState, useEffect } from "react";
-import { getAllBooks, getUser } from "@/services";
+import { deleteBook, getAllBooks, getUser } from "@/services";
 import ReactPaginate from 'react-paginate';
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/footer";
+import { ToastContainer } from "react-toastify";
 
 const Books = () => {
   const [allBooks, setBooks] = useState([]);
@@ -32,8 +33,12 @@ const Books = () => {
     fetchData();
   }, []);
 
-  const deleteBook = (bookId) => {
-    // Implement book deletion logic here
+  const deleteBookFunction = async (bookId) => {
+      const response = await deleteBook(bookId);
+
+      if (response) {
+        toast.success("Book deleted successfully");
+      }
   };
 
   const handlePageChange = (selectedPage) => {
@@ -89,6 +94,7 @@ const Books = () => {
 
   return (
     <>
+     <ToastContainer />
       <main className="min-h-screen flex-col items-center justify-between" style={{ margin: 20 }}>
         <nav className="items-center space-x-4 justify-center" style={{ marginTop: 20, marginBottom: 20 }}>
           {[
@@ -186,7 +192,7 @@ const Books = () => {
                     >Edit</Link>
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded"
-                      onClick={() => deleteBook(book.id)}
+                      onClick={() => deleteBookFunction(book.id)}
                     >
                       Delete
                     </button>
