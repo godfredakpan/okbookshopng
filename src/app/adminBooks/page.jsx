@@ -169,11 +169,12 @@ const Books = () => {
             <tbody>
               {currentBooks.map((book) => (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={book.id}>
-                  <td className="px-6 py-4">{book.title}</td>
-                  <td className="px-6 py-4">{book.author}</td>
-                  <td className="px-6 py-4">NGN{book.price.toFixed(2)}</td>
-                  <td className="px-6 py-4">{book.category}</td>
+                  <td className="px-6 py-4">{book?.title}</td>
+                  <td className="px-6 py-4">{book?.author}</td>
+                  <td className="px-6 py-4">NGN{book?.price.toFixed(2)}</td>
+                  <td className="px-6 py-4">{book?.category}</td>
                   <td className="px-6 py-4">
+                    {book.image && (
                     <Image
                       src={book.image}
                       alt={book.title}
@@ -181,6 +182,7 @@ const Books = () => {
                       height={100}
                       style={{ resizeMode: 'cover' }}
                     />
+                    )}
                   </td>
                   <td className="px-6 py-4">
                     <Link
