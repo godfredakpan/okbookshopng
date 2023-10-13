@@ -219,7 +219,7 @@ const AddBook = () => {
                 {image ? (
                   <div className="mt-2 flex items-center space-x-2">
                     <img
-                      src={image}
+                      src={image ?? ''}
                       alt="Selected Image"
                       className="w-24 h-24 rounded-lg object-cover"
                     />

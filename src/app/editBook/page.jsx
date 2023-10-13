@@ -253,8 +253,8 @@ const EditBook = () => {
                 {image ? (
                   <div className="mt-2 flex items-center space-x-2">
                     <Image
-                    src={book.image}
-                    alt={book.title}
+                    src={image}
+                    alt={book?.title}
                     width={100}
                     height={100}
                     style={{ resizeMode: 'cover' }} />
