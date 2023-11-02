@@ -281,18 +281,20 @@ const BookList = ({ books }) => {
             ))}
           </div>
           <div className="mt-4">
-            <ul className="flex justify-center">
+          <div className="flex  justify-center ">
+            <ul className="flex flex-wrap">
               {Array.from({ length: Math.ceil(sortedBooks.length / booksPerPage) }, (_, index) => (
-                <li key={index} className="mx-2">
+                <><li key={index} className="mx-1" style={{marginTop: 20}}>
                   <button
                     onClick={() => paginate(index + 1)}
                     className={`${currentPage === index + 1 ? "bg-blue-800 text-white" : "bg-blue-400"} px-2 py-1 rounded`}
                   >
                     {index + 1}
                   </button>
-                </li>
+                </li></>
               ))}
             </ul>
+            </div>
           </div>
           <div className="mt-4">
             <p className="text-xl font-semibold">
